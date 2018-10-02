@@ -1,13 +1,38 @@
 import * as path from 'path';
-import {Configuration} from 'webpack';
+import {
+    Configuration,
+    HotModuleReplacementPlugin,
+    HashedModuleIdsPlugin,
+} from 'webpack';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config: Configuration = {
     mode: 'production',
-    entry: './app.ts',
+    entry: {
+        app: './src/app.ts',
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.bundle.js',
+        filename: '[name]-[hash].js',
+    },
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                }
+            }
+        },
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9876,
+        hot: true,
     },
     module: {
         rules: [
@@ -23,6 +48,18 @@ const config: Configuration = {
     },
     plugins: [
         new CleanWebpackPlugin(['./dist']),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            cache: true,
+            minify: {
+                collapseWhitespace: true,
+                collapseInlineTagWhitespace: true,
+                removeComments: true,
+                removeEmptyAttributes: true,
+            },
+        }),
+        new HashedModuleIdsPlugin(),
+        new HotModuleReplacementPlugin(),
     ],
 };
 
