@@ -5,5 +5,8 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "outDir": "./dist"
-    }
+    },
+    "include": [
+        "./src/**/*"
+    ]
 }
