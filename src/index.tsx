@@ -1,14 +1,33 @@
 import * as React from 'react';
+import {
+    Route,
+    HashRouter as Router,
+    Switch,
+    Link,
+} from 'react-router-dom';
 import {render} from 'react-dom';
+import {
+    Root,
+    Test,
+} from './pages';
 
-interface HelloProps {
-    compiler: string;
-    library: string;
-}
+interface AppRouterProps {}
 
-const Hello = (props: HelloProps): JSX.Element => <h1>Hello from {props.compiler} and {props.library}!</h1>;
+const AppRouter: React.StatelessComponent<AppRouterProps> = (): JSX.Element =>
+(
+    <Router>
+        <div className="wrapper">
+            <Link to="/">Home</Link>
+            <Link to="/test">Test</Link>
+            <Switch>
+                <Route exact path="/" component={Root}/>
+                <Route path="/test" component={Test}/>
+            </Switch>
+        </div>
+    </Router>
+);
 
 render(
-    <Hello compiler="TypeScript" library="React"/>,
+    <AppRouter/>,
     document.querySelector('#app')
 );
