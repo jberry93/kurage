@@ -1,9 +1,9 @@
-export const counter = (state = 0, action) => {
-    switch (action.type) {
+export const counter = (state = {count: 0}, {type}) => {
+    switch (type) {
         case 'INCREMENT':
-            return state++;
+            return {count: state.count + 1};
         case 'DECREMENT':
-            return state--;
+            return {count: state.count - 1};
         default:
             return state;
     }
