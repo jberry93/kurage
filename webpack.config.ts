@@ -8,7 +8,7 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config: Configuration = {
-    mode: 'production',
+    mode: 'development',
     entry: {
         app: './src/app.ts',
     },
